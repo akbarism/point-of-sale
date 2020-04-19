@@ -4,19 +4,21 @@
             <img src="../assets/img/berger.png">
         </div>
         <div class="menu-title">
-            <h1 class="text-2xl font-thin">{{title}}</h1>
+            <h1 class="text-2xl font-thin">{{titles}}</h1>
         </div>
         <div class="menu-search">
-            <img src="../assets/img/search.png" alt="">
+            <input type="text" id="find" class="mr-2 h-10 p-2">
+            <label for="find"><img src="../assets/img/search.png" alt=""></label>
         </div>
     </div>
 </template>
 <script>
 export default {
     name: "navbar",
+    props: ['titles'],
     data () {
         return{
-            title: "Food item"
+            
         }
     }
     
@@ -36,6 +38,7 @@ export default {
     background: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
     font-family: "Airbnb Cereal App Bold";
+
 }
 .burger img{
     width: 35.35px;
@@ -49,7 +52,7 @@ export default {
 }
 .menu-search{
     display: flex;
-    width: 100px;
+    width: 300px;
     justify-content: center;
 }
 .menu-search img{

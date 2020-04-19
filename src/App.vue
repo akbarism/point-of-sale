@@ -19,4 +19,8 @@
   font-family: 'Airbnb Cereal App Light';
   src: url('./assets/font/AirbnbCerealLight.woff');
 }
+@font-face {
+  font-family: 'Airbnb Cereal App';
+  src: url('./assets/font/AirbnbCerealBook.woff');
+}
 </style>

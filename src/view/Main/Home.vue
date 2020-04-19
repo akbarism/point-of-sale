@@ -1,7 +1,7 @@
 <template>
     <div class="main-container">
         <div class="side-left">
-            <navbar v-bind:title="title"/>
+            <navbar v-bind:titles="titles"/>
             <menuItems v-on:oper="history"  v-on:over="menu"/>
         </div>
         <div class="side-right hide">
@@ -15,6 +15,11 @@ import menuItems from "../../components/menuItems.vue"
 import cart from "../../components/cart.vue"
 export default {
     name: "Home",
+    data(){
+        return{
+            titles: 'Food Items'
+        } 
+    },
     components: {
         navbar,
         menuItems,
@@ -26,23 +31,23 @@ export default {
             const tag = document.querySelector(".side-right");
             const nav = document.querySelector(".side-left");
             const none = document.querySelector(".list-menu");
-            const boom = document.querySelector(".history-menu")
-            tag.classList.toggle("hide")
-            nav.classList.toggle("long")
-            none.classList.toggle("blank")
-            boom.classList.toggle("there")
-            this.title = "History"
+            const boom = document.querySelector(".there")
+            tag.classList.remove("hide")
+            nav.classList.add("long")
+            none.classList.remove("blank")
+            boom.style.display = "flex"
+            this.titles = "History"
         },
         menu(){
             const tag = document.querySelector(".side-right");
             const nav = document.querySelector(".side-left");
             const none = document.querySelector(".list-menu");
             const boom = document.querySelector(".history-menu")
-            tag.classList.toggle("hide")
-            nav.classList.toggle("long")
-            none.classList.toggle("blank")
-            boom.classList.toggle("there")
-            this.title = "History"
+            tag.classList.add("hide")
+            nav.classList.remove("long")
+            none.classList.add("blank")
+            boom.style.display = "none"
+            this.titles = "Food Items"
         }
     }
 }
@@ -59,9 +64,10 @@ export default {
 }
 .side-left{
     width: 75%;
+    transition: 0.5s ;
 }
 .long{
-    /* transition: 0.5s; */
+    transition: 0.5s;
     width: 100%;
 }
 .side-right{
@@ -70,9 +76,10 @@ export default {
     position: fixed;
     right: 0;
     top: 0;
-  
+    
 }
 .hide{
     display: flex;
+    transition: ease;
 }
 </style>

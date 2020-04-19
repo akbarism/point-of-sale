@@ -1,100 +1,50 @@
 <template>
-    <div class="main-menu">
+    <div class="main-menu" >
 <sidebar v-on:showw="$emit('over')" v-on:show="$emit('oper')"/>
     <history/>
 <div class="list-menu blank">
-<div class="card-menu">
+<div class="card-menu" @click="mmk(item.id_menu)" v-for="item in newMenu" :key="item.id_menu">
     <section class="ikon-menu">
-        <img src="../assets/img/espresso.jpg" alt="">
+        <img :src="item.image" alt="">
     </section>
     <section class="detail-menu">
-        <h1 class="text-lg">Espresso</h1>
-        <p class="text-2xl py-4">Rp. 10.000</p>
-    </section>
-</div>
-<div class="card-menu">
-    <section class="ikon-menu">
-        <img src="../assets/img/coffe-late.jpg" alt="">
-        </section>
-    <section class="detail-menu">
-        <h1>Espresso</h1>
-        <p>Rp. 10.000</p>
-    </section>
-</div>
-<div class="card-menu card-check">
-    <section class="ikon-menu">
-        <img src="../assets/img/latte.jpg" alt="">
-    </section>
-    <section class="detail-menu">
-        <h1>Espresso</h1>
-        <p>Rp. 10.000</p>
-    </section>
-</div>
-<div class="card-menu">
-    <section class="ikon-menu">
-        <img src="../assets/img/red-velvet.jpg" alt="">
-    </section>
-    <section class="detail-menu">
-        <h1>Espresso</h1>
-        <p>Rp. 10.000</p>
-    </section>
-</div>
-<div class="card-menu">
-    <section class="ikon-menu">
-        <img src="../assets/img/choco-rum.jpg" alt="">
-    </section>
-    <section class="detail-menu">
-        <h1>Espresso</h1>
-        <p>Rp. 10.000</p>
-    </section>
-</div>
-<div class="card-menu">
-    <section class="ikon-menu">
-        <img src="../assets/img/blackforest.jpg" alt="">
-    </section>
-    <section class="detail-menu">
-        <h1>Espresso</h1>
-        <p>Rp. 10.000</p>
-    </section>
-</div>
-<div class="card-menu">
-    <section class="ikon-menu">
-        <img src="../assets/img/chicken-katsu.jpg" alt="">
-    </section>
-    <section class="detail-menu">
-        <h1>Espresso</h1>
-        <p>Rp. 10.000</p>
-    </section>
-</div>
-<div class="card-menu">
-    <section class="ikon-menu">
-        <img src="../assets/img/tongkol.jpg" alt="">
-    </section>
-    <section class="detail-menu">
-        <h1>Espresso</h1>
-        <p>Rp. 10.000</p>
-    </section>
-</div>
-<div class="card-menu">
-    <section class="ikon-menu">
-        <img src="../assets/img/tempe-goreng.jpg" alt="">
-    </section>
-    <section class="detail-menu">
-        <h1>Espresso</h1>
-        <p>Rp. 10.000</p>
+        <h1 class="text-lg">{{item.name}}</h1>
+        <p class="text-2xl py-4">Rp. {{item.price}}</p>
     </section>
 </div>
 </div>
     </div>
 </template>
 <script>
-import sidebar from "../components/sidebar"
-import history from "../components/history"
+import sidebar from "../components/sidebar";
+import history from "../components/history";
+// import axios from "axios";
 export default {
     name: "menuItems",
     components: {
         sidebar,
         history,
+
+    },
+    data(){
+        return{
+           
+        }
+    },
+    computed:{
+        newMenu(){
+        return this.$store.state.allmenu
+        } 
+    },
+    methods: {
+        mmk(id_menu){
+            // console.log(id_menu);
+            
+            this.$store.commit('SELECT_MENU', id_menu)        
+        }
+    },
+    mounted(){
+        this.$store.dispatch('getMenu', this.$store.state.currentPage)
     }
 }
 </script>
@@ -110,13 +60,13 @@ export default {
 }
 .list-menu{
     flex-wrap: wrap ;
-    display: none;
-    width: 90%;
+    display: flex;
+    width: 0;
     height: 938px;
     background:  rgba(190, 195, 202, 0.3);
 }
 .blank{
-    display: flex;
+    width: 90%
 }
 .card-menu{
     margin: 20px;
@@ -128,6 +78,7 @@ export default {
 .card-menu:hover{
     transform: scale(1.02);
     transition: 0.3s;
+    box-shadow: 10px 15px 10px rgba(16, 17, 17, 0.61);
 
 }
 .card-check{

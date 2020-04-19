@@ -12,22 +12,34 @@
         <t-modal class="flex flex-col justify-center" ref="modal">
            <p class="text-xl pb-5">Add Item</p>
             <div class="form-add">
-             <form>
+             <form @submit.prevent="add">
           <div class="form-group">
             <label class="label" for="exampleFormControlInput1">Name</label>
             <input
               type="text"
               class="form-control"
-              id="exampleFormControlInput1"       
+              id="exampleFormControlInput1" 
+              v-model="menuValue.name"
+                    
             />
+            <!-- <div
+                v-if="submitted && !$v.menuValue.name.required"
+                class="invalid-feedback"
+              >Name is required</div> -->
           </div>
           <div class="form-group">
             <label class="label" for="exampleFormControlInput1">Image</label>
             <input
-              type="text"
+              type="file"
+              ref="file"
               class="form-control"
               id="exampleFormControlInput1"
+              
             />
+            <div
+                v-if="submitted && !$v.menuValue.image.required"
+                class="invalid-feedback"
+              >image is required</div>
           </div>
            <div class="form-group">
             <label class="label" for="exampleFormControlInput1">Price</label>
@@ -35,19 +47,23 @@
               type="text"
               class="form-price"
               id="exampleFormControlInput1"
+              v-model="menuValue.price"
             />
           </div>
            <div class="form-group">
             <label class="label" for="exampleFormControlInput1">Category</label>
-            <input
+            <select
               type="select"
               class="form-select"
               id="exampleFormControlInput1"
-            />
+              v-model="menuValue.id_category"
+            >
+            <option value="1">Chake</option>
+            <option value="2">Drink</option></select>
           </div>
           <div class="hero-btn">
           <button class="cncl  py-3 text-white w-3/12 rounded-md">Cancel</button>
-          <button class="add-itm  py-3 text-white w-3/12 rounded-md">Add</button>
+          <button class="add-itm  py-3 text-white w-3/12 rounded-md" @click="add">Add</button>
           </div>
         </form>
             </div>
@@ -56,9 +72,38 @@
     </div>
 </template>
 <script>
+// import axios from "axios"
+// import { required, minLength, email } from "vuelidate/lib/validators";
 export default {
-    name: "navbar"
+    name: "navbar",
+    data(){
+      return{
+        menuValue: {
+          name: "",
+          image: null,
+          price: "",
+          id_category: ""
+        }
+      }
+    },
+    validations: {
+    email: { required, email },
+    fullname: { required },
+    password: { required, minLength: minLength(6) }
+  },
+    //    computed:{
+    //     newMenu(){
+    //     return this.$store.state.allmenu
+    //     } 
+    // },
+    methods: {
+      add(){
+       
+        this.$store.dispatch('add')
+        }
+    }
 }
+ 
 </script>
 <style scoped>
 .side{
@@ -104,30 +149,34 @@ export default {
 }
 .form-control {
   width: 350px;
-  height: 40px;
-  padding: 12px;
+  height: 50px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1)
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Airbnb Cereal App";
+
 }
 .form-price {
   width: 200px;
-  height: 40px;
+  height: 50px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
-box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1)
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Airbnb Cereal App";
 }
 .form-select {
   width: 150px;
-  height: 40px;
+  height: 50px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
-box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1)
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Airbnb Cereal App";
 }
 label{
     display: flex;
@@ -146,5 +195,9 @@ label{
 }
 .add-itm{
  background: #57CAD5 ;
+}
+.invalid-feedback{
+  z-index: 10;
+  color: #F24F8A;
 }
 </style>
