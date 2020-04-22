@@ -2,7 +2,7 @@
   <div class="menu-cart">
     <div class="nav-cart">
       <p>Cart</p>
-      <div class="count-cart">0</div>
+      <div class="count-cart text-white">{{selectedmenu.length}}</div>
     </div>
     <div class="content-cart">
       <div class="empty-cart " v-if="selectedmenu.length == 0">
@@ -22,17 +22,17 @@
               </div>
               <div class="min-plus">
                 <div class="min"><p>-</p></div>
-                <input type="text" class="numb text-center" />
-                <div class="plus"><p>+</p></div>
+                <input type="text" class="numb text-center" v-model="funCount"  />
+                <div class="plus" @click="increment"><p>+</p></div>
               </div>
             </div>
-            <div class="price-cart font-bold"><p>{{item.price}}</p></div>
+            <div class="price-cart font-bold"><p>{{item.price * funCount}}</p></div>
           </div>
         </div>
         <div class="footer-cart">
           <div class="total">
             <div class="ttl"><p>Total :</p></div>
-            <div class="rp"><p>Rp. 105.000*</p></div>
+            <div class="rp"><p></p></div>
           </div>
           <div class="ppn"><p>*Belum termasuk ppn</p></div>
           <div class="hero-button">
@@ -87,15 +87,21 @@
 // import axios from 'axios'
 export default {
   name: "cart",
-  data() {
-    return{
-    }
-  },
   computed: {
      selectedmenu () {
       return this.$store.state.selectedmenu
+    },
+    funCount(){
+      return this.$store.state.count
     }
-  }
+  },
+  methods:{
+    increment(){
+      this.$store.commit('COUNT')
+
+    }
+  },
+
 };
 </script>
 <style scoped>
@@ -170,6 +176,7 @@ export default {
   width: 80px;
   height: 80px;
   border-radius: 5px;
+  object-fit: cover;
 }
 .icon-cart {
   width: 80px;
@@ -210,6 +217,7 @@ export default {
   height: 35px;
   border: 1px solid #82de3a;
   background: rgba(130, 222, 58, 0.2);
+  cursor: pointer;
 }
 .numb {
   display: flex;
@@ -227,6 +235,7 @@ export default {
   height: 35px;
   border: 1px solid #82de3a;
   background: rgba(130, 222, 58, 0.2);
+  cursor: pointer;
 }
 .footer-cart {
   margin-top: 10px;

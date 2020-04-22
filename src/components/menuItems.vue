@@ -1,29 +1,38 @@
 <template>
     <div class="main-menu" >
-<sidebar v-on:showw="$emit('over')" v-on:show="$emit('oper')"/>
-    <history/>
-<div class="list-menu blank">
-<div class="card-menu" @click="mmk(item.id_menu)" v-for="item in newMenu" :key="item.id_menu">
-    <section class="ikon-menu">
+        <sidebar v-on:showw="$emit('over')" v-on:show="$emit('oper')"/>
+        <history/>
+        <div class="list-menu blank">
+        <div class="card-menu " @click="mmk(item.id_menu)" v-for="item in newMenu" :key="item.id_menu">
+        <section class="ikon-menu card-check">
         <img :src="item.image" alt="">
-    </section>
-    <section class="detail-menu">
+        </section>
+        <section class="detail-menu">
         <h1 class="text-lg">{{item.name}}</h1>
         <p class="text-2xl py-4">Rp. {{item.price}}</p>
-    </section>
-</div>
+        </section>
+        <!-- <t-pagination
+  :total-items="totalRows"
+  :per-page="perPage"
+  :limit="limit"
+  :disabled="disabled"
+  v-model="currentPage"
+/> -->
+    </div>
 </div>
     </div>
 </template>
 <script>
 import sidebar from "../components/sidebar";
 import history from "../components/history";
+// import TPagination from 'vue-tailwind/src/components/t-pagination.vue'
 // import axios from "axios";
 export default {
     name: "menuItems",
     components: {
         sidebar,
         history,
+        // TPagination
 
     },
     data(){
@@ -82,12 +91,16 @@ export default {
 
 }
 .card-check{
+    /* position: absolute; */
     height: 180px;
-    background: rgba(0, 0, 0, 0.4);
+    /* background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)); */
+    background: black;
 }
 .ikon-menu img{
+    
     height: 180px;
     width: 270px;
+    object-fit: cover;
 }
 .detail-menu{
 display: flex;

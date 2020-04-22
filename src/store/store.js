@@ -9,8 +9,8 @@ export const store = new Vuex.Store({
         allmenu: [],
         selectedmenu: [],
         currentPage: 1,
-        totalPages: [],
-        total: []
+        msg: '',
+        count: 1
         
     },
     getters:{
@@ -28,33 +28,33 @@ export const store = new Vuex.Store({
         SELECT_MENU(state, id_menu){
             const data = state.allmenu.filter(item => item.id_menu === id_menu)
             const selected = state.selectedmenu.filter(item => item.id_menu === id_menu)
+            // const dataSelected = {
+            //     id_menu: data[0].id_menu,
+            //     name: data[0].name,
+            //     image: data[0].image,
+            //     id_category: data[0].id_category,
+            //     price: data[0].price,
+            //     count: 1
+                
+            // }
             if (state.selectedmenu.length === 0 || selected[0] === undefined) {
-                state.selectedmenu.unshift(data[0])
-              }
-              
-              
-              
-            //   else {
-            //     if (data.id === selected[0].id_menu) {
-            //       const currentId = state.selectedmenu.map(item => item.id_menu).indexOf(id_menu)
-            //       state.selectedmenu.splice(currentId, 1)
-            //       return
-            //     }
-            //     state.selectedmenu.push(data)
-            //   }
-                
-                
+                state.selectedmenu.push(data[0])
+              }  
+        },
+        GET_MSG(state, error){
+            state.msg = error
+        },
+        COUNT(state){
+            return state.count++
         }
     },
     actions: {
-        
+
         getMenu(context, komodo){
             axios
-            .get(`http://localhost:2000/menu/?page=${komodo}`)
+            .get(`process.env.APP_VUE_URL_PAGE ${komodo}`)
             .then(res =>{
                 context.commit ('GET_MENU', res.data.result)
-                // context.state.total = res.data.total;
-                // context.state.totalPages = Math.ceil(this.total / 9)
             })
             .catch(err => {
                 console.log(err);
@@ -62,20 +62,31 @@ export const store = new Vuex.Store({
             });
 
         },
-        add(e, context){
-            e.preventDefault();
-            const fd = new FormData();
-            fd.append("name", this.menuValue.name);
-            fd.append("image", this.$refs.file.files[0]);
-            fd.append("price", this.menuValue.price);
-            fd.append("id_category", this.menuValue.id_category);
-            axios.post(`http://localhost:2000/menu/`, fd)
+        add(context, data){
+            axios.post(process.env.VUE_APP_URL_ADD, data)
             .then(res => {
-              context.commit ('ADD_MENU', res.data)
-              this.$router.go('/')
-             
-              
+                res.data
+                console.log(data);
+                
             })
-          }
+            .catch((error)=>{
+                context.commit('GET_MSG', error.response.data.err)
+            })
+          },
+        isLogin(context, data){
+            return new Promise((resolve)=>{
+                axios
+                .post("http://localhost:2000/cashier/login", data)
+                .then((res) => {
+                    localStorage.setItem('id_cashier', res.data.result.id_cashier)
+                    localStorage.setItem('password', res.data.result.password)
+                    resolve(res)
+                  })
+                  .catch((error) => {
+                    context.commit('GET_MSG', error.response.data.err);
+                    
+                  });   
+            })
+          },
     }
 })

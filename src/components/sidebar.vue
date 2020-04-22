@@ -9,57 +9,61 @@
         <div class="add">
             <img  @click="$refs.modal.show()"  src="../assets/img/add.png" alt="">
         </div>
+        <div class="logout " @click="logot">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
         <t-modal class="flex flex-col justify-center" ref="modal">
            <p class="text-xl pb-5">Add Item</p>
             <div class="form-add">
+              <!-- --------------- MODAL ------------------- -->
              <form @submit.prevent="add">
-          <div class="form-group">
-            <label class="label" for="exampleFormControlInput1">Name</label>
+          <div class="form-group" >
+            <label class="label" for="name">Name</label>
             <input
               type="text"
+              
               class="form-control"
-              id="exampleFormControlInput1" 
+              id="name" 
               v-model="menuValue.name"
-                    
+              
             />
-            <!-- <div
-                v-if="submitted && !$v.menuValue.name.required"
-                class="invalid-feedback"
-              >Name is required</div> -->
+            <div v-if="submitted && $v.email.$error" class="text-red-500 font-semibold ml-1">
+                  <span v-if="!$v.menuValue.name.required">Required</span>
+              </div>
           </div>
           <div class="form-group">
-            <label class="label" for="exampleFormControlInput1">Image</label>
+            <label class="label" for="image">Image</label>
             <input
               type="file"
               ref="file"
               class="form-control"
-              id="exampleFormControlInput1"
+              id="image"
+              
               
             />
-            <div
-                v-if="submitted && !$v.menuValue.image.required"
-                class="invalid-feedback"
-              >image is required</div>
           </div>
            <div class="form-group">
-            <label class="label" for="exampleFormControlInput1">Price</label>
+            <label class="label" for="price">Price</label>
             <input
               type="text"
               class="form-price"
-              id="exampleFormControlInput1"
+              id="price"
               v-model="menuValue.price"
+             
             />
           </div>
            <div class="form-group">
-            <label class="label" for="exampleFormControlInput1">Category</label>
+            <label class="label" for="catgeory">Category</label>
             <select
               type="select"
               class="form-select"
-              id="exampleFormControlInput1"
+              id="category"
               v-model="menuValue.id_category"
+              
             >
             <option value="1">Chake</option>
-            <option value="2">Drink</option></select>
+            <option value="2">Drink</option>
+            <option value="3">Food</option></select>
           </div>
           <div class="hero-btn">
           <button class="cncl  py-3 text-white w-3/12 rounded-md">Cancel</button>
@@ -73,7 +77,7 @@
 </template>
 <script>
 // import axios from "axios"
-// import { required, minLength, email } from "vuelidate/lib/validators";
+import { required, number } from "vuelidate/lib/validators";
 export default {
     name: "navbar",
     data(){
@@ -83,13 +87,13 @@ export default {
           image: null,
           price: "",
           id_category: ""
-        }
+        },
+        
       }
     },
     validations: {
-    email: { required, email },
-    fullname: { required },
-    password: { required, minLength: minLength(6) }
+    name: { required },
+    price: { required, number }
   },
     //    computed:{
     //     newMenu(){
@@ -97,9 +101,21 @@ export default {
     //     } 
     // },
     methods: {
-      add(){
-       
-        this.$store.dispatch('add')
+      add(e){
+        e.preventDefault();
+            const fd = new FormData();
+            fd.append("name", this.menuValue.name);
+            fd.append("image", this.$refs.file.files[0]);
+            fd.append("price", this.menuValue.price);
+            fd.append("id_category", this.menuValue.id_category);
+            this.$store.dispatch('add', fd)
+            this.$router.go('/')
+            
+        },
+        logot(){
+          delete localStorage.id_cashier
+          delete localStorage.password
+          this.$router.push('/login')
         }
     }
 }
