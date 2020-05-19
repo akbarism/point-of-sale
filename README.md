@@ -1,4 +1,4 @@
-# Library App
+# Point Of Sales App
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/akbarism/point-of-sale)
 ![GitHub contributors](https://img.shields.io/github/contributors/akbarism/point-of-sale)
