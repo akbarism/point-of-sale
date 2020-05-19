@@ -7,9 +7,10 @@
 
 <p align="center">
   <img height="100" src="https://vuejs.org/images/logo.png">
+  <img height="100" src="https://avatars1.githubusercontent.com/u/2918581?s=200&v=4">
 </p>
 <p align="center">
-  Built with Vue Js.
+  Built with Vue Js And Bootst.
 </p>
 
 ## Table of Contents
