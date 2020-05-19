@@ -41,7 +41,7 @@
 2. Type `git clone https://github.com/akbarism/point-of-sale.git`
 3. Open the folder and type `npm install` for install dependencies
 4. Create Environment Variable [here](#create-environment-variable)
-5. Before run this, you must run [backend] first(#related-project-backend)
+5. Before run this, you must run [backend](#related-project-backend) first
 6. Type `npm run serve` for run this app.
 
 ## Create Environment Variable
