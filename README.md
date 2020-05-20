@@ -59,7 +59,17 @@ VUE_APP_SECRET_KEY=YOUR_API_KEY
 ## Screenshots
 
 
-coming soon
+<div align="center" margin-bottom="10px">
+    <img width="860" src="https://github.com/akbarism/point-of-sale/blob/master/src/assets/img/pos-a.png">
+</div>
+<div align="center" margin-bottom="10px">
+    <img width="430" src="https://github.com/akbarism/point-of-sale/blob/master/src/assets/img/pos-1.png"> &nbsp
+    <img width="430" src="https://github.com/akbarism/point-of-sale/blob/master/src/assets/img/pos-2.png">
+</div>
+<div align="center" margin-bottom="10px">
+    <img width="430" src="https://github.com/akbarism/point-of-sale/blob/master/src/assets/img/pos-3.png">  &nbsp 
+    <img width="430" src="https://github.com/akbarism/point-of-sale/blob/master/src/assets/img/pos-4.png">
+</div>
 
 
 ## Contributing
