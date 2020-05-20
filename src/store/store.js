@@ -50,9 +50,9 @@ export const store = new Vuex.Store({
     },
     actions: {
 
-        getMenu(context, komodo){
+        getMenu(context){
             axios
-            .get(`process.env.APP_VUE_URL_PAGE ${komodo}`)
+            .get(`//localhost:2000/menu/`)
             .then(res =>{
                 context.commit ('GET_MENU', res.data.result)
             })

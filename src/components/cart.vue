@@ -12,7 +12,7 @@
       </div>
       <div class="idle-cart" v-else >
         <div class="main-list">
-          <div class="list-cart" v-for="item in selectedmenu" :key="item" >
+          <div class="list-cart" v-for="item in selectedmenu" :key="item.id" >
             <div class="icon-cart">
               <img :src="item.image" alt="" />
             </div>
@@ -32,7 +32,7 @@
         <div class="footer-cart">
           <div class="total">
             <div class="ttl"><p>Total :</p></div>
-            <div class="rp"><p></p></div>
+            <div class="rp"><p>{{selectedmenu[0].price * funCount }} </p></div>
           </div>
           <div class="ppn"><p>*Belum termasuk ppn</p></div>
           <div class="hero-button">
