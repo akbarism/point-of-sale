@@ -10,7 +10,7 @@
             <img  @click="$refs.modal.show()"  src="../assets/img/add.png" alt="">
         </div>
         <div class="logout " @click="logot">
-            <i class="fas fa-sign-out-alt"></i>
+            <i class="fas fa-sign-out-alt fa-2x text-red-600"></i>
         </div>
         <t-modal class="flex flex-col justify-center" ref="modal">
            <p class="text-xl pb-5">Add Item</p>
@@ -25,11 +25,7 @@
               class="form-control"
               id="name" 
               v-model="menuValue.name"
-              
             />
-            <div v-if="submitted && $v.email.$error" class="text-red-500 font-semibold ml-1">
-                  <span v-if="!$v.menuValue.name.required">Required</span>
-              </div>
           </div>
           <div class="form-group">
             <label class="label" for="image">Image</label>
@@ -38,8 +34,6 @@
               ref="file"
               class="form-control"
               id="image"
-              
-              
             />
           </div>
            <div class="form-group">
@@ -49,7 +43,6 @@
               class="form-price"
               id="price"
               v-model="menuValue.price"
-             
             />
           </div>
            <div class="form-group">
@@ -59,7 +52,6 @@
               class="form-select"
               id="category"
               v-model="menuValue.id_category"
-              
             >
             <option value="1">Chake</option>
             <option value="2">Drink</option>
@@ -71,7 +63,6 @@
           </div>
         </form>
             </div>
-            
         </t-modal>
     </div>
 </template>

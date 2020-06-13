@@ -10,8 +10,6 @@ export const store = new Vuex.Store({
         selectedmenu: [],
         currentPage: 1,
         msg: '',
-        count: 1
-        
     },
     getters:{
         
@@ -25,27 +23,32 @@ export const store = new Vuex.Store({
             state.allmenu = data
         }
         ,
-        SELECT_MENU(state, id_menu){
-            const data = state.allmenu.filter(item => item.id_menu === id_menu)
-            const selected = state.selectedmenu.filter(item => item.id_menu === id_menu)
-            // const dataSelected = {
-            //     id_menu: data[0].id_menu,
-            //     name: data[0].name,
-            //     image: data[0].image,
-            //     id_category: data[0].id_category,
-            //     price: data[0].price,
-            //     count: 1
-                
-            // }
-            if (state.selectedmenu.length === 0 || selected[0] === undefined) {
-                state.selectedmenu.push(data[0])
-              }  
+        SELECT_MENU(state, data){
+            const items = state.selectedmenu.find((item) => item.data.id_menu === data.data.id_menu)
+            if (!items) {
+                state.selectedmenu.push(data)
+            }
         },
         GET_MSG(state, error){
             state.msg = error
         },
-        COUNT(state){
-            return state.count++
+        INCREMENT(state, data){
+            let items = state.selectedmenu.find((item) => item.data.id_menu === data.data.id_menu)
+            if (items) {
+                items.count += 1;
+            }
+        },
+        DECREMENT(state, data){
+            let items = state.selectedmenu.find((item) => item.data.id_menu === data.data.id_menu)
+            if (items) {
+                items.count -= 1;
+                if (items.count < 1) {
+                    items.count = 1
+                }
+            }
+        },
+        CANCEL_ORDER(state) {
+            state.selectedmenu = []
         }
     },
     actions: {
@@ -58,7 +61,6 @@ export const store = new Vuex.Store({
             })
             .catch(err => {
                 console.log(err);
-                
             });
 
         },
@@ -66,8 +68,6 @@ export const store = new Vuex.Store({
             axios.post(process.env.VUE_APP_URL_ADD, data)
             .then(res => {
                 res.data
-                console.log(data);
-                
             })
             .catch((error)=>{
                 context.commit('GET_MSG', error.response.data.err)

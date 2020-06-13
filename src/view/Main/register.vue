@@ -2,9 +2,21 @@
     <div class="gray">
         <div class="content-modal">
             <img src="../../assets/img/poslog.png">
-            <div class="for-flex"><h1 class="text-2xl font-bold">LOGIN</h1></div>
-
+            <div class="for-flex"><h1 class="text-2xl font-bold">REGISTER</h1></div>
             <form @submit.prevent="add" class="flex justify-center flex-col">
+            <div class="form-group" >
+            <label class="text-xl font-bold" for="fullname">password</label>
+            <input
+              type="text"
+              class="form-control"
+              id="fullname" 
+              v-model="name"
+              :class="$v.name.$error ? 'bg-red-200 placeholder-red-500' : 'bg-white'"
+            />
+            <!-- <div v-if="submitted && $v.email.$error" class="text-red-500 font-semibold ml-1">
+                  <span v-if="!$v.name.required">Required</span>
+              </div> -->
+          </div>
             <div class="form-group" >
             <label class="text-xl font-bold" for="name">Email</label>
             <input
@@ -34,8 +46,8 @@
               </div>
           </div>
           <div class="form-group">
-          <button @click="login" class="add-itm  py-3 text-white w-full ">Sign In</button>
-          <p class="text-lg mt-3 font-semibold">Not Registered? <router-link to='/' class="ok">Create an Account</router-link></p>
+          <button @click="login" class="add-itm  py-3 text-white w-full ">Sign Up</button>
+          <p class="text-lg mt-3 font-semibold">have an account?? <router-link to='/' class="ok">log in</router-link></p>
           </div>
         </form> 
         </div>
@@ -45,10 +57,11 @@
 import { required, email } from 'vuelidate/lib/validators';
 // import axios from 'axios'
 export default {
-    name: "login",
+    name: "register",
     data(){
         return{
             email: '',
+            name: '',
             password:'',
             submitted: false,
             error: false
@@ -131,10 +144,9 @@ export default {
     font-family: "Airbnb Cereal App";
     }
     .add-itm{
-    background: #57CAD5 ;
+    background: #F24F8A ;
 }
 .ok{
     color: #57CAD5 ;
 }
-
 </style>

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 import Home from './view/Main/Home.vue'
 import login from './view/Main/login.vue'
+import register from './view/Main/register.vue'
 
 
 vue.use(VueRouter);
@@ -19,7 +20,11 @@ const routes = [
     name: 'login',
     component: login,
   },
-
+  {
+    path: '/register',
+    name: 'register',
+    component: register,
+  },
 ];
 const router = new VueRouter({
   mode: 'history',

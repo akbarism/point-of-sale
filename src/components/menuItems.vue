@@ -3,7 +3,7 @@
         <sidebar v-on:showw="$emit('over')" v-on:show="$emit('oper')"/>
         <history/>
         <div class="list-menu blank">
-        <div class="card-menu " @click="mmk(item.id_menu)" v-for="item in newMenu" :key="item.id_menu">
+        <div class="card-menu " @click="pick(item)" v-for="item in newMenu" :key="item.id_menu">
         <section class="ikon-menu card-check">
         <img :src="item.image" alt="">
         </section>
@@ -33,11 +33,9 @@ export default {
         sidebar,
         history,
         // TPagination
-
     },
     data(){
         return{
-           
         }
     },
     computed:{
@@ -46,10 +44,8 @@ export default {
         } 
     },
     methods: {
-        mmk(id_menu){
-            // console.log(id_menu);
-            
-            this.$store.commit('SELECT_MENU', id_menu)        
+        pick(data){
+            this.$store.commit('SELECT_MENU', {data, count : 1})    
         }
     },
     mounted(){

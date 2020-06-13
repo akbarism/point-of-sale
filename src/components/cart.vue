@@ -12,27 +12,27 @@
       </div>
       <div class="idle-cart" v-else >
         <div class="main-list">
-          <div class="list-cart" v-for="item in selectedmenu" :key="item.id" >
+          <div class="list-cart" v-for="(item) in selectedmenu" :key="item.id" >
             <div class="icon-cart">
-              <img :src="item.image" alt="" />
+              <img :src="item.data.image" alt="" />
             </div>
             <div class="title-cart">
               <div class="select">
-                <h3>{{item.name}}</h3>
+                <h3>{{item.data.name}}</h3>
               </div>
               <div class="min-plus">
-                <div class="min"><p>-</p></div>
-                <input type="text" class="numb text-center" v-model="funCount"  />
-                <div class="plus" @click="increment"><p>+</p></div>
+                <div class="min" @click="decrement(item)"><p>-</p></div>
+                <input type="number" class="numb text-center" v-model="item.count" @change="canotnull(item)" />
+                <div class="plus" @click="increment(item)"><p>+</p></div>
               </div>
             </div>
-            <div class="price-cart font-bold"><p>{{item.price * funCount}}</p></div>
+            <div class="price-cart font-bold"><p>{{item.data.price * item.count}}</p></div>
           </div>
         </div>
         <div class="footer-cart">
           <div class="total">
             <div class="ttl"><p>Total :</p></div>
-            <div class="rp"><p>{{selectedmenu[0].price * funCount }} </p></div>
+            <div class="rp"><p>{{selectedmenu[0].data.price * selectedmenu[0].count }} </p></div>
           </div>
           <div class="ppn"><p>*Belum termasuk ppn</p></div>
           <div class="hero-button">
@@ -48,10 +48,10 @@
                 <div class="name-cashier mt-3 w-full flex ">
                   <p>Cashier : Isyana</p>
                 </div>
-                <div class="cecklist-menu flex mt-10 w-full ">
-                  <h1 class="name-menu w-2/5 h-40 ">Coffee Latte</h1>
-                  <h2 class="vold w-2/5">1x</h2>
-                  <p class="price-tag">Rp. 15.000</p>
+                <div class="cecklist-menu flex mt-10 w-full" v-for="item in selectedmenu" :key="item.id">
+                  <h1 class="name-menu w-2/5 h-40 ">{{item.data.name}}</h1>
+                  <h2 class="vold w-2/5">{{item.count}} x</h2>
+                  <p class="price-tag">{{item.data.price}}</p>
                 </div>
                 <div class="add-ppn flex w-full ">
                   <h1 class="w-4/5">Ppn 10%</h1>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="payment flex w-full ">
                   <h1 class="mr-10 mt-3 mb-3">Payment :</h1>
-                  <select name="payment" id=""
+                  <select name="payment"
                     ><option value="ovo">OVO</option>
                     <option value="gopay">Gopay</option>
                     <option value="cash">Cash</option></select
@@ -76,7 +76,7 @@
                 </div>
               </div>
             </t-modal>
-            <button class="cancel-cancel p-3 w-10/12">Cancel</button>
+            <button class="cancel-cancel p-3 w-10/12" @click="cancelOrder">Cancel</button>
           </div>
         </div>
       </div>
@@ -96,9 +96,19 @@ export default {
     }
   },
   methods:{
-    increment(){
-      this.$store.commit('COUNT')
-
+    increment(data){
+      this.$store.commit('INCREMENT', data)
+    },
+    decrement(data){
+      this.$store.commit('DECREMENT', data)
+    },
+    canotnull(data) {
+      if (data.count < 1){
+        data.count = 1
+      }
+    },
+    cancelOrder() {
+      this.$store.commit('CANCEL_ORDER')
     }
   },
 
