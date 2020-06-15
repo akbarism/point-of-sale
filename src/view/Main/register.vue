@@ -5,17 +5,17 @@
             <div class="for-flex"><h1 class="text-2xl font-bold">REGISTER</h1></div>
             <form @submit.prevent="add" class="flex justify-center flex-col">
             <div class="form-group" >
-            <label class="text-xl font-bold" for="fullname">password</label>
+            <label class="text-xl font-bold" for="fullname">Fullname</label>
             <input
               type="text"
               class="form-control"
               id="fullname" 
-              v-model="name"
-              :class="$v.name.$error ? 'bg-red-200 placeholder-red-500' : 'bg-white'"
+              v-model="fullname"
+              :class="$v.fullname.$error ? 'bg-red-200 placeholder-red-500' : 'bg-white'"
             />
-            <!-- <div v-if="submitted && $v.email.$error" class="text-red-500 font-semibold ml-1">
-                  <span v-if="!$v.name.required">Required</span>
-              </div> -->
+            <div v-if="submitted && $v.email.$error" class="text-red-500 font-semibold ml-1">
+                  <span v-if="!$v.fullname.required">Required</span>
+              </div>
           </div>
             <div class="form-group" >
             <label class="text-xl font-bold" for="name">Email</label>
@@ -47,7 +47,7 @@
           </div>
           <div class="form-group">
           <button @click="login" class="add-itm  py-3 text-white w-full ">Sign Up</button>
-          <p class="text-lg mt-3 font-semibold">have an account?? <router-link to='/' class="ok">log in</router-link></p>
+          <p class="text-lg mt-3 font-semibold">have an account?? <router-link to='/login' class="ok">log in</router-link></p>
           </div>
         </form> 
         </div>
@@ -55,19 +55,21 @@
 </template>
 <script>
 import { required, email } from 'vuelidate/lib/validators';
+import Swal from 'sweetalert2';
 // import axios from 'axios'
 export default {
     name: "register",
     data(){
         return{
             email: '',
-            name: '',
+            fullname: '',
             password:'',
             submitted: false,
             error: false
         }
     },
     validations: {
+    fullname: { required },
     email: { required, email },
     password: { required },
   },
@@ -79,10 +81,15 @@ export default {
       if (this.$v.$invalid) {
         return;
             }else{
-                this.$store.dispatch('isLogin', {email: this.email, password: this.password})
-                .then((res) => {
-                    res
-                this.$router.push('/');
+                this.$store.dispatch('register', {name_cashier: this.fullname, email: this.email, password: this.password})
+                .then(() => {
+                Swal.fire({
+                title: 'Register success',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1200
+              })
+                this.$router.push('/login');
         });
             }
         },
@@ -106,7 +113,7 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 430px;
+        height: 500px;
         width: 430px;
         background: #ffffff;
         border-radius: 5px;
@@ -116,13 +123,12 @@ export default {
         width: 120px;
         height: 120px;
         border-radius: 50%;
-        margin-top: -100px;
+        margin-top: -50px;
     }
     .for-flex{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin-bottom: 40px ;
         margin-top: -30px;
 
     }

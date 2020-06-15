@@ -32,7 +32,7 @@
         <div class="footer-cart">
           <div class="total">
             <div class="ttl"><p>Total :</p></div>
-            <div class="rp"><p>{{selectedmenu[0].data.price * selectedmenu[0].count }} </p></div>
+            <div class="rp"><p>{{ fieldTotal }} </p></div>
           </div>
           <div class="ppn"><p>*Belum termasuk ppn</p></div>
           <div class="hero-button">
@@ -45,19 +45,19 @@
                   <h1 class="w-3/5 font-black">Checkout</h1>
                   <p class="w-2/5 font-bold">Recept no:</p>
                 </div>
-                <div class="name-cashier mt-3 w-full flex ">
-                  <p>Cashier : Isyana</p>
+                <div class="name-cashier mt-3 mb-10 w-full flex ">
+                  <p>Cashier : {{cashier[0].name_cashier}}</p>
                 </div>
-                <div class="cecklist-menu flex mt-10 w-full" v-for="item in selectedmenu" :key="item.id">
-                  <h1 class="name-menu w-2/5 h-40 ">{{item.data.name}}</h1>
+                <div class="cecklist-menu flex w-full" v-for="item in selectedmenu" :key="item.id">
+                  <h1 class="name-menu w-2/5">{{item.data.name}}</h1>
                   <h2 class="vold w-2/5">{{item.count}} x</h2>
                   <p class="price-tag">{{item.data.price}}</p>
                 </div>
-                <div class="add-ppn flex w-full ">
+                <div class="add-ppn flex w-full mt-5">
                   <h1 class="w-4/5">Ppn 10%</h1>
                   <p>Rp. 10.500</p>
                 </div>
-                <div class="total-list flex w-2/5 ">
+                <div class="total-list flex w-2/5">
                   <h1 class="flex mr-20">Total :</h1>
                   <p class="flex ">Rp. 25.500</p>
                 </div>
@@ -84,15 +84,20 @@
   </div>
 </template>
 <script>
-// import axios from 'axios'
 export default {
   name: "cart",
+  data () {
+    return {
+      fieldTotal: 0,
+      getOrder: []
+    }
+  },
   computed: {
      selectedmenu () {
       return this.$store.state.selectedmenu
     },
-    funCount(){
-      return this.$store.state.count
+    cashier() {
+      return this.$store.state.getCashier
     }
   },
   methods:{
@@ -109,9 +114,26 @@ export default {
     },
     cancelOrder() {
       this.$store.commit('CANCEL_ORDER')
+    },
+    grandTotal () {
+     this.getOrder = this.selectedmenu[0]
+      console.log(this.getOrder)
+     if (this.getOrder.length != 0) {
+       const total = []
+       for (let i = 0; i < this.getOrder; i +=1) {
+         total.push(this.getOrder[i].data.prce * this.getOrder[i].count)
+       }
+       this.fieldTotal = total
+     }
     }
   },
-
+  mounted() {
+    this.$store.dispatch('getCashier');
+    this.grandTotal();
+  },
+  update() {
+    this.grandTotal();
+  }
 };
 </script>
 <style scoped>
@@ -273,14 +295,12 @@ export default {
   flex-direction: column;
 }
 .submit-cart {
-  /* width: 300px; */
   background: #57cad5;
   border: none;
   font-family: "Airbnb Cereal App Bold";
   color: #ffffff;
 }
 .cancel-cancel {
-  /* width: 300px; */
   background: #f24f8a;
   border: none;
   font-family: "Airbnb Cereal App Bold";

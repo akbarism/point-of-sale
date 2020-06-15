@@ -5,9 +5,12 @@ import './assets/css/tailwind.css'
 import TModal from 'vue-tailwind/src/components/TModal.vue'
 import { store } from './store/store'
 import vuelidate from 'vuelidate';
-Vue.use(vuelidate);
+import Chartkick from 'vue-chartkick';
+import Chart from 'chart.js';
 
-Vue.use(TModal)
+Vue.use(vuelidate);
+Vue.use(TModal);
+Vue.use(Chartkick.use(Chart))
 Vue.config.productionTip = false
 
 new Vue({

@@ -10,6 +10,8 @@ export const store = new Vuex.Store({
         selectedmenu: [],
         currentPage: 1,
         msg: '',
+        getCashier: [],
+        idCashier : null
     },
     getters:{
         
@@ -18,11 +20,12 @@ export const store = new Vuex.Store({
         GET_MENU(state, data){
             state.allmenu = data;
         },
-
+        GET_CASHIER(state, data) {
+            state.getCashier = data;
+        },
         ADD_MENU(state, data){
             state.allmenu = data
-        }
-        ,
+        },
         SELECT_MENU(state, data){
             const items = state.selectedmenu.find((item) => item.data.id_menu === data.data.id_menu)
             if (!items) {
@@ -62,7 +65,16 @@ export const store = new Vuex.Store({
             .catch(err => {
                 console.log(err);
             });
-
+        },
+        getCashier(context) {
+            axios
+            .get(`//localhost:2000/cashier/${localStorage.id_cashier}`)
+            .then(res =>{
+                context.commit ('GET_CASHIER', res.data.result)
+            })
+            .catch(err => {
+                console.log(err);
+            });
         },
         add(context, data){
             axios.post(process.env.VUE_APP_URL_ADD, data)
@@ -83,10 +95,21 @@ export const store = new Vuex.Store({
                     resolve(res)
                   })
                   .catch((error) => {
-                    context.commit('GET_MSG', error.response.data.err);
-                    
+                    context.commit('GET_MSG', error.response.data.err); 
                   });   
             })
           },
+        register(context, data) {
+            return new Promise((resolve)=> {
+                axios
+                .post("http://localhost:2000/cashier/register", data)
+                .then((res)=> {
+                    resolve(res)
+                })
+                .catch((error)=> {
+                    context.commit('GET_MSG', error.response.data.err)
+                })
+            })
+        }
     }
 })

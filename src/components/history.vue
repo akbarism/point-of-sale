@@ -38,24 +38,26 @@
         </div>
       </div>
     </div>
-    <div class="revenue">
+    <div class="revenue flex flex-col">
       <div class="title">
         <h1 class="text-xl">Revenue</h1>
         <div class="round">
-          <select id="month"
-            ><option value="month">Month</option></select
-          >
+          <select id="month">
+            <option value="month">Month</option>
+          </select>
         </div>
       </div>
-      <div class="grarik"></div>
+      <div class="grafik">
+        <area-chart :data="chartData"> </area-chart>
+      </div>
     </div>
     <div class="recent">
       <div class="title">
         <h1 class="text-xl">Recent Order</h1>
         <div class="round">
-          <select id="month"
-            ><option value="month">Today</option></select
-          >
+          <select id="month">
+            <option value="month">Today</option>
+          </select>
         </div>
       </div>
       <div class="grarik"></div>
@@ -64,7 +66,20 @@
 </template>
 <script>
 export default {
-  name: "history"
+  name: "history",
+  data() {
+    return {
+       chartData: {
+        '2020-05-7': 3,
+        '2020-05-8': 4,
+        '2020-05-9': 2,
+        '2020-05-10': 10,
+        '2020-05-11': 8,
+        '2020-05-12': 11,
+        '2020-05-13': 9,
+      }
+    }
+  }
 };
 </script>
 <style scoped>
@@ -165,17 +180,23 @@ export default {
   display: flex;
   justify-content: center;
   width: 97%;
-  height: 300px;
+  height: 450px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
   background: #ffffff;
   border-radius: 10px;
   margin-top: 20px;
   margin-left: 10px;
+  padding: 0 20px;
+}
+.grafik {
+  width: 1100px;
+  margin-left: 20px;
 }
 .title {
   display: flex;
   margin-top: 10px;
-  width: 95%;
+  width: 100%;
+  height: 50px;
   justify-content: space-between;
 }
 .round {
@@ -200,5 +221,6 @@ export default {
   border-radius: 10px;
   margin-top: 20px;
   margin-left: 10px;
+  padding: 20px;
 }
 </style>

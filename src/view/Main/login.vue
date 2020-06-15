@@ -3,7 +3,6 @@
         <div class="content-modal">
             <img src="../../assets/img/poslog.png">
             <div class="for-flex"><h1 class="text-2xl font-bold">LOGIN</h1></div>
-
             <form @submit.prevent="add" class="flex justify-center flex-col">
             <div class="form-group" >
             <label class="text-xl font-bold" for="name">Email</label>
@@ -35,7 +34,7 @@
           </div>
           <div class="form-group">
           <button @click="login" class="add-itm  py-3 text-white w-full ">Sign In</button>
-          <p class="text-lg mt-3 font-semibold">Not Registered? <router-link to='/' class="ok">Create an Account</router-link></p>
+          <p class="text-lg mt-3 font-semibold">Not Registered? <router-link to='/register' class="ok">Create an Account</router-link></p>
           </div>
         </form> 
         </div>
@@ -43,6 +42,7 @@
 </template>
 <script>
 import { required, email } from 'vuelidate/lib/validators';
+import Swal from 'sweetalert2'
 // import axios from 'axios'
 export default {
     name: "login",
@@ -69,6 +69,12 @@ export default {
                 this.$store.dispatch('isLogin', {email: this.email, password: this.password})
                 .then((res) => {
                     res
+                Swal.fire({
+                title: 'Login succes',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2200
+              })
                 this.$router.push('/');
         });
             }
