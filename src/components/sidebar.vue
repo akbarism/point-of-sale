@@ -89,7 +89,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 938px;
   width: 100px;
   background: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);

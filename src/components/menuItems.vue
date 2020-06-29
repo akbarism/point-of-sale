@@ -60,14 +60,14 @@ export default {
 }
 .main-menu{
     display: flex;
-    width: 100%;
+    height: 1000px;
     font-family: "Airbnb Cereal App Bold";
 }
 .list-menu{
     flex-wrap: wrap ;
     display: flex;
     width: 0;
-    height: 938px;
+    /* height: 938px; */
     background:  rgba(190, 195, 202, 0.3);
 }
 .blank{

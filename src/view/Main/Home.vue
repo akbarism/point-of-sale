@@ -37,6 +37,7 @@ export default {
             none.classList.remove("blank")
             boom.style.display = "flex"
             this.titles = "History"
+            // document.querySelector(".main-menu").style.display = "none"
         },
         menu(){
             const tag = document.querySelector(".side-right");

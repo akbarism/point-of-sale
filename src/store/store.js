@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
         currentPage: 1,
         msg: '',
         getCashier: [],
-        idCashier : null
+        idCashier : null,
+        total: 0
     },
     getters:{
         
@@ -44,9 +45,10 @@ export const store = new Vuex.Store({
         DECREMENT(state, data){
             let items = state.selectedmenu.find((item) => item.data.id_menu === data.data.id_menu)
             if (items) {
-                items.count -= 1;
-                if (items.count < 1) {
-                    items.count = 1
+                if (items.count <= 1) {
+                    state.selectedmenu = state.selectedmenu.filter(item => item != items)
+                }else {
+                    items.count -= 1;
                 }
             }
         },
@@ -58,7 +60,7 @@ export const store = new Vuex.Store({
 
         getMenu(context){
             axios
-            .get(`//localhost:2000/menu/`)
+            .get(process.env.VUE_APP_URL + "menu")
             .then(res =>{
                 context.commit ('GET_MENU', res.data.result)
             })
@@ -68,7 +70,7 @@ export const store = new Vuex.Store({
         },
         getCashier(context) {
             axios
-            .get(`//localhost:2000/cashier/${localStorage.id_cashier}`)
+            .get(process.env.VUE_APP_URL + "cashier/" + localStorage.id_cashier)
             .then(res =>{
                 context.commit ('GET_CASHIER', res.data.result)
             })
@@ -77,7 +79,7 @@ export const store = new Vuex.Store({
             });
         },
         add(context, data){
-            axios.post(process.env.VUE_APP_URL_ADD, data)
+            axios.post(process.env.VUE_APP_URL + "menu", data)
             .then(res => {
                 res.data
             })
@@ -88,7 +90,7 @@ export const store = new Vuex.Store({
         isLogin(context, data){
             return new Promise((resolve)=>{
                 axios
-                .post("http://localhost:2000/cashier/login", data)
+                .post(process.env.VUE_APP_URL + "cashier/login", data)
                 .then((res) => {
                     localStorage.setItem('id_cashier', res.data.result.id_cashier)
                     localStorage.setItem('password', res.data.result.password)
@@ -102,7 +104,7 @@ export const store = new Vuex.Store({
         register(context, data) {
             return new Promise((resolve)=> {
                 axios
-                .post("http://localhost:2000/cashier/register", data)
+                .post(process.env.VUE_APP_URL + "cashier/register", data)
                 .then((res)=> {
                     resolve(res)
                 })
